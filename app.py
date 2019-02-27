@@ -20,6 +20,16 @@ colors = {
     'text': '#7FDBFF'
 }
 
+markdown_text = '''
+### Dash and Markdown
+
+Dash apps can be written in Markdown.
+Dash uses the [CommonMark](http://commonmark.org/)
+specification of Markdown.
+Check out their [60 Second Markdown Tutorial](http://commonmark.org/help/)
+if this is your first introduction to Markdown!
+'''
+
 app.layout = html.Div(style={'backgroundColor': colors['background']} ,children=[
     html.H1(children='Hello Dash',
     style={
@@ -36,6 +46,10 @@ app.layout = html.Div(style={'backgroundColor': colors['background']} ,children=
         'color': colors['text']
     }
     ),
+
+    html.Div([
+        dcc.Markdown(children=markdown_text)
+    ]),
 
     dcc.Graph(
         id='life-exp-vs-gdp',
