@@ -1,21 +1,51 @@
 import dash
-from dash.dependencies import Input, Output
-import dash_html_components as html
 import dash_core_components as dcc
+import dash_html_components as html
 
-app = dash.Dash()
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-app.layout = html.Div(children=[
-        dcc.Input(id='input', value='Enter something', type='text'),
-        html.Div(id='output')
-    ])
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-@app.callback(
-    Output(component_id='output', component_property='children'),
-    [Input(component_id='input', component_property='value')])
-def update_value(input_data):
-    return "Input: {}".format(input_data)
+colors = {
+    'background': '#111111',
+    'text': '#7FDBFF'
+}
 
+app.layout = html.Div(style={'backgroundColor': colors['background']} ,children=[
+    html.H1(children='Hello Dash',
+    style={
+        'textAlign': 'center',
+        'color': colors['text']
+    }
+    ),
+
+    html.Div(children='''
+        Dash: A web application framework for Python.
+    ''',
+    style={
+        'textAlign': 'center',
+        'color': colors['text']
+    }
+    ),
+
+    dcc.Graph(
+        id='example-graph',
+        figure={
+            'data': [
+                {'x': [1, 2, 3], 'y': [4, 1, 2], 'type': 'bar', 'name': 'SF'},
+                {'x': [1, 2, 3], 'y': [2, 4, 5], 'type': 'line', 'name': u'Montréal'},
+            ],
+            'layout': {
+                'title': 'Dash Data Visualization',
+                'plot_bgcolor': colors['background'],
+                'paper_bgcolor': colors['background'],
+                'font': {
+                    'color': colors['text']
+                }
+            }
+        }
+    )
+])
 
 if __name__ == '__main__':
     app.run_server(debug=True)
